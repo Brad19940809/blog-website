@@ -1,11 +1,11 @@
 server {
     listen      80;
 
-    root       /srv/awesome/www;
-    access_log /srv/awesome/log/access_log;
-    error_log  /srv/awesome/log/error_log;
+    root       /root/awesome/www;
+    access_log /root/awesome/log/access_log;
+    error_log  /root/awesome/log/error_log;
 
-    # server_name awesome.liaoxuefeng.com;
+    # server_name pyer.club;
 
     client_max_body_size 1m;
 
@@ -17,11 +17,11 @@ server {
     sendfile on;
 
     location /favicon.ico {
-        root /srv/awesome/www;
+        root /root/awesome/www;
     }
 
     location ~ ^\/static\/.*$ {
-        root /srv/awesome/www;
+        root /root/awesome/www;
     }
 
     location / {

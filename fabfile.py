@@ -4,19 +4,20 @@
 __author__ = 'brad'
 
 '''
-Deployment toolkit.
+这个fabric是要用python2才能用的，所以，该文件要在fab2 当中执行。
 '''
 
 import os, re
-
 from datetime import datetime
 from fabric.api import *
 
 env.user = 'root'
 env.sudo_user = 'root'
 # env.host = '192.168.1.102'
-env.hosts = ['192.168.31.158']
-env.password ='586341'
+# env.hosts = ['192.168.31.158']
+env.hosts = ['162.219.121.41']
+env.port=26504
+env.password ='123456'
 
 db_user = 'root'
 db_password = '123456'
@@ -96,7 +97,7 @@ def rollback():
         print ('Found current symbol link points to: %s\n' % current)
         try:
             index = files.index(current)
-        except ValueError, e:
+        except ValueError as e:
             print ('ERROR: symbol link is invalid.')
             return
         if len(files) == index + 1:
@@ -135,7 +136,7 @@ def restore2local():
     files = [f for f in fs if f.startswith('backup-') and f.endswith('.sql.tar.gz')]
     files.sort(cmp=lambda s1, s2: 1 if s1 < s2 else -1)
     if len(files)==0:
-        print 'No backup files found.'
+        print( 'No backup files found.')
         return
     print ('Found %s backup files:' % len(files))
     print ('==================================================')
@@ -146,17 +147,17 @@ def restore2local():
     print ('==================================================')
     print ('')
     try:
-        num = int(raw_input ('Restore file: '))
+        num = int(input('Restore file: '))
     except ValueError:
         print ('Invalid file number.')
         return
     restore_file = files[num]
-    yn = raw_input('Restore file %s: %s? y/N ' % (num, restore_file))
+    yn = input('Restore file %s: %s? y/N ' % (num, restore_file))
     if yn != 'y' and yn != 'Y':
         print ('Restore cancelled.')
         return
     print ('Start restore to local database...')
-    p = raw_input('Input mysql root password: ')
+    p = input('Input mysql root password: ')
     sqls = [
         'drop database if exists awesome;',
         'create database awesome;',
